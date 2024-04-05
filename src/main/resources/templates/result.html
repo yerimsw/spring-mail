@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title th:remove="all">오늘의 운세</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h3>당신의 오늘 운세는?!</h3>
+    <p>
+        <span th:text="${email}">email</span>으로 전송된 메일을 확인해주세요!
+    </p>
+</body>
+</html>

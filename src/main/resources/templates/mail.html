@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title th:remove="all">오늘의 운세</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h3>당신의 오늘 운세는?!</h3>
+    <p>
+        <span th:text="${name}">name</span>님의 오늘의 운세는...
+    </p>
+    <p>
+        <span th:text="${jwt}">jwt</span>
+    </p>
+    <p>256-bit-secret-key:</p>
+    <p><a href="https://jwt.io/">운세 확인하러 가기</a></p>
+</body>
+</html>
