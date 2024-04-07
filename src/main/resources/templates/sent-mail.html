@@ -5,9 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <h3>Send Mail With JWT</h3>
+    <h3>Here's your JWT!</h3>
     <p>
-        We sent your JWT. Please check your email: <span th:text="${email}">email</span>
+        <span th:text="${jwt}">jwt</span>
     </p>
+    <p>256-bit-secret-key: "this-is-a-test-256-bit-secret-key"</p>
+    <p><a href="https://jwt.io/">Decode JWT</a></p>
 </body>
 </html>

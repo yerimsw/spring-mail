@@ -5,9 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <h3>Send Mail With JWT</h3>
-    <p>
-        We sent your JWT. Please check your email: <span th:text="${email}">email</span>
-    </p>
+<h3>Please enter your email below</h3>
+<form action="" method="post">
+    <input type="text" name="email" required>
+    <button type="submit">Submit</button>
+</form>
 </body>
 </html>

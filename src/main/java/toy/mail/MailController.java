@@ -4,6 +4,7 @@ import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -31,10 +32,15 @@ public class MailController {
         return "result";
     }
 
-    @GetMapping("/template-engine")
-    public String mailSendTestV4(@RequestParam String email, Model model) throws MessagingException {
+    @PostMapping("/template-engine")
+    public String mailSendTestV3(@RequestParam String email, Model model) throws MessagingException {
         mailService.templateMail(email);
         model.addAttribute("email", email);
         return "result";
+    }
+
+    @GetMapping("/template-engine")
+    public String mailSendTestV3() {
+        return "request-mail";
     }
 }

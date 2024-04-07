@@ -63,14 +63,14 @@ public class MailService {
 
         // 3. 메일 본문에 실릴 HTML을 위한 TemplateEngine을 적용한다.
         HashMap<String, String> emailValues = new HashMap<>(); // Model 객체처럼 사용
-        emailValues.put("jwt","jwtToken");
+        emailValues.put("jwt", JwtUtils.createJwt(email));
 
         Context context = new Context();
         emailValues.forEach((key, value) -> {
             context.setVariable(key, value);
         });
 
-        String html = templateEngine.process("mail",context);
+        String html = templateEngine.process("sent-mail",context);
         helper.setText(html, true);
 
         // 4. 메일을 전송한다.
