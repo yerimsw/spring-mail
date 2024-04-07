@@ -1,0 +1,3 @@
+[submodule "ymlconfig"]
+	path = ymlconfig
+	url = git@github.com:yerimsw/ymlconfig.git
