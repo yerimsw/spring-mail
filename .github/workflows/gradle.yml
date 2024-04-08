@@ -48,3 +48,17 @@ jobs:
 
       - name: Push image to DockerHub
         run: docker push yerimsw/myapp:latest
+
+      - name: Configure AWS IAM credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Start CodeDeploy agent
+        run: >
+          aws deploy create-deployment --application-name myapp
+          --deployment-config-name CodeDeployDefault.AllAtOnce
+          --deployment-group-name test-group
+          --s3-location bucket=hashblog.me,bundleType=zip,key=myapp.zip

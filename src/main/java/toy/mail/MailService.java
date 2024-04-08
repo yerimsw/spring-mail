@@ -75,8 +75,6 @@ public class MailService {
 
         String html = templateEngine.process("sent-mail",context);
         helper.setText(html, true);
-        FileSystemResource file = new FileSystemResource(new File("C:\\Users\\heew0\\Desktop\\develop\\toy-projects\\spring-mail\\src\\main\\resources\\static\\heart_pepe.png"));
-        helper.addInline("heart_pepe.jpg", file);
 
         // 4. 메일을 전송한다.
         javaMailSender.send(message);
