@@ -32,7 +32,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Copy submodule
-        run: ./gradlew
+        run: ./gradlew copySubmodule
 
       - name: Build with Gradle Wrapper
         run: ./gradlew build
