@@ -37,6 +37,13 @@ jobs:
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
+      - name: Make .zip file
+        run: zip -r ./myapp.zip .
+        shell: bash
+
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./myapp.zip s3://hashblog.me/myapp.zip
+
       - name: Build Docker image
         run: docker build --tag yerimsw/myapp:latest .
 
