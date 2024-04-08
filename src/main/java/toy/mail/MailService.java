@@ -2,6 +2,7 @@ package toy.mail;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.io.File;
 import java.util.HashMap;
 
 @Service
@@ -60,6 +62,7 @@ public class MailService {
         // 2. MimeMessage를 조작하는데 도움을 주는 MimeMessageHelper를 생성하고, 조작한다.
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(email);
+        helper.setSubject("Hi, there!");
 
         // 3. 메일 본문에 실릴 HTML을 위한 TemplateEngine을 적용한다.
         HashMap<String, String> emailValues = new HashMap<>(); // Model 객체처럼 사용
@@ -72,6 +75,8 @@ public class MailService {
 
         String html = templateEngine.process("sent-mail",context);
         helper.setText(html, true);
+        FileSystemResource file = new FileSystemResource(new File("C:\\Users\\heew0\\Desktop\\develop\\toy-projects\\spring-mail\\src\\main\\resources\\static\\heart_pepe.png"));
+        helper.addInline("heart_pepe.jpg", file);
 
         // 4. 메일을 전송한다.
         javaMailSender.send(message);
