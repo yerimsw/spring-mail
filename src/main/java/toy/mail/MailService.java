@@ -22,11 +22,15 @@ public class MailService {
     private final MailSender mailSender;
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
+    private final RedisRepository redisRepository;
 
-    public MailService(MailSender mailSender, JavaMailSender javaMailSender, SpringTemplateEngine templateEngine) {
+    private final String domain = "http://localhost:8080/mail/verify-email?token=";
+
+    public MailService(MailSender mailSender, JavaMailSender javaMailSender, SpringTemplateEngine templateEngine, RedisRepository redisRepository) {
         this.mailSender = mailSender;
         this.javaMailSender = javaMailSender;
         this.templateEngine = templateEngine;
+        this.redisRepository = redisRepository;
     }
 
     public void basicMail(String email) {
@@ -65,8 +69,9 @@ public class MailService {
         helper.setSubject("Hi, there!");
 
         // 3. 메일 본문에 실릴 HTML을 위한 TemplateEngine을 적용한다.
+        String jwt = JwtUtils.createJwt(email);
         HashMap<String, String> emailValues = new HashMap<>(); // Model 객체처럼 사용
-        emailValues.put("jwt", JwtUtils.createJwt(email));
+        emailValues.put("jwt", domain + jwt);
 
         Context context = new Context();
         emailValues.forEach((key, value) -> {
@@ -76,7 +81,14 @@ public class MailService {
         String html = templateEngine.process("sent-mail",context);
         helper.setText(html, true);
 
-        // 4. 메일을 전송한다.
+        // 4. jwt를 redis에 저장한다.
+        redisRepository.saveJwt(jwt, email);
+
+        // 5. 메일을 전송한다.
         javaMailSender.send(message);
+    }
+
+    public String verifyEmail(String token) {
+        return redisRepository.findEmailByJwt(token);
     }
 }
